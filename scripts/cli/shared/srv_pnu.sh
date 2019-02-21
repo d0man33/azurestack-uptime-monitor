@@ -54,29 +54,38 @@ TOKEN=$(az account get-access-token | jq -r ".accessToken") \
 ALL_UPDATES=$(curl -sX GET \
         -H "Authorization: Bearer $TOKEN" \
         -H "Content-Type: application/json" \
-        https://adminmanagement.$(cat /run/secrets/cli | jq -r '.fqdn')"$UPDATE_LOCATION_ID"/updates?api-version="$API_VERSION_UPDATE_ADMIN") \
+        https://adminmanagement.$(cat /run/secrets/cli | jq -r '.fqdn')"$UPDATE_LOCATION_ID"/updates?api-version="$API_VERSION_UPDATE_ADMIN" \
+        | jq '[.value[]]') \
   && azs_log_field T status admin_pnu_get_updates \
   || azs_log_field T status admin_pnu_get_updates fail
+
+# Sort by version
+ALL_UPDATES_SORT=$(echo $ALL_UPDATES | jq 'sort_by(.properties.version) | reverse') \
+  && azs_log_field T status admin_pnu_sort_updates \
+  || azs_log_field T status admin_pnu_sort_updates fail
+
+# OrderByUpdateVersion
 
 # Select details from corresponding update
 case "$CURRENT_UPDATE_STATE" in
   "UpdateAvailable")
-    # If needed, order by date. Select the oldest one.
-    NEW_UPDATE=$(echo $ALL_UPDATES | jq '.value[] | select(.properties.state=="Ready")')
-    NEW_UPDATE_TEXT="and the new version ready to be applied is"
+    # Select Microsoft updates, Select the latest version.
+    NEW_UPDATE=$(echo $ALL_UPDATES_SORT | jq '[.[] | select (.properties.publisher=="Microsoft") | select (.properties.state=="Ready")][0]')
+    NEW_UPDATE_TEXT="and the latest version ready to be applied is"
     ;;
   "UpdateInProgress")
-    NEW_UPDATE=$(echo $ALL_UPDATES | jq '.value[] | select(.properties.state=="Installing")')
+    # Select Microsoft updates, Select the latest version.
+    NEW_UPDATE=$(echo $ALL_UPDATES_SORT | jq '[.[] | select (.properties.publisher=="Microsoft") | select(.properties.state=="Installing")][0]')
     NEW_UPDATE_TEXT="and the new version that is installing is"
     ;;
   "AppliedSuccessfully")
-    # If needed, order by date. Select the oldest one.
-    NEW_UPDATE=$(echo $ALL_UPDATES | jq '.value[] | select(.properties.state=="Installed")')
+    # Select Microsoft updates, Select the latest version.
+    NEW_UPDATE=$(echo $ALL_UPDATES_SORT | jq '[.[] | select (.properties.publisher=="Microsoft") | select(.properties.state=="Installed")][0]')
     NEW_UPDATE_TEXT="and the version that applied succesfully is"
     ;;
   "UpdateFailed")
     # If needed, order by date. Select the latest one.
-    NEW_UPDATE=$(echo $ALL_UPDATES | jq '.value[] | select(.properties.state=="InstallationFailed")')
+    NEW_UPDATE=$(echo $ALL_UPDATES_SORT | jq '[.[] | select (.properties.publisher=="Microsoft") | select(.properties.state=="InstallationFailed")][0]')
     NEW_UPDATE_TEXT="and the version that failed to install is"
     ;;
 esac
