@@ -98,7 +98,13 @@ function azs_registration
   local ACCOUNT=$(echo $ARGUMENTS_JSON | jq -r ".activationKey" | base64 -d | jq -r ".account")
   [ $ACCOUNT != "azsuptime" ] && { echo "Activation key is invalid" ; exit 1 ; }
 
-  local FILENAME=deploy-$(echo $ARGUMENTS_JSON | jq -r ".tenantSubscriptionId")-$(date --utc +y%Gw%V-m%md%dh%Hm%M)-v$(sudo cat /azs/common/config.json | jq -r ".version.script").log
+  if [ $FQDN = "local.azurestack.external" ]
+  then 
+    local FILENAME=deploy-asdk-$(date --utc +y%Gw%V-m%md%dh%Hm%M)-v$(sudo cat /azs/common/config.json | jq -r ".version.script").log
+  else
+    local FILENAME=deploy-$(echo $ARGUMENTS_JSON | jq -r ".tenantSubscriptionId")-$(date --utc +y%Gw%V-m%md%dh%Hm%M)-v$(sudo cat /azs/common/config.json | jq -r ".version.script").log
+  fi
+
   echo "registration" > $FILENAME
 
   az storage blob upload \
@@ -115,6 +121,7 @@ function azs_bridge
 {
   local ACCOUNT=$(cat /run/secrets/cli | jq -r ".activationKey" | base64 -d | jq -r ".account")
   [ $ACCOUNT != "azsuptime" ] && { echo "Activation key is invalid" ; exit 1 ; }
+  [ $FQDN = "local.azurestack.external" ] && { echo "Running on ASDK" ; return 0 ; }
 
   for F in $(ls /azs/cli/export)
   do 
