@@ -42,12 +42,12 @@
         "datasource": "-- Grafana --",
         "enable": false,
         "hide": false,
-        "iconColor": "#629e51",
+        "iconColor": "rgba(255, 96, 96, 1)",
         "limit": 100,
-        "name": "AppliedSuccessfully",
+        "name": "UpdateFailed",
         "showIn": 0,
         "tags": [
-          "AppliedSuccessfully"
+          "UpdateFailed"
         ],
         "type": "tags"
       },
@@ -55,12 +55,12 @@
         "datasource": "-- Grafana --",
         "enable": false,
         "hide": false,
-        "iconColor": "rgba(255, 96, 96, 1)",
+        "iconColor": "#629e51",
         "limit": 100,
-        "name": "UpdateFailed",
+        "name": "AppliedSuccessfully",
         "showIn": 0,
         "tags": [
-          "UpdateFailed"
+          "AppliedSuccessfully"
         ],
         "type": "tags"
       }
