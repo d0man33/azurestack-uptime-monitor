@@ -44,10 +44,10 @@
         "hide": false,
         "iconColor": "#629e51",
         "limit": 100,
-        "name": "UpdateInstalled",
+        "name": "AppliedSuccessfully",
         "showIn": 0,
         "tags": [
-          "UpdateInstalled"
+          "AppliedSuccessfully"
         ],
         "type": "tags"
       },
