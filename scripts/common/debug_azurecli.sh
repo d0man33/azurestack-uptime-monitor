@@ -1,5 +1,4 @@
 #!/bin/bash
-#SCRIPT_VERSION=0.5
 
 JOB_NAME=debug_azurecli
 JOB_TIMESTAMP=$(date --utc +%s)
