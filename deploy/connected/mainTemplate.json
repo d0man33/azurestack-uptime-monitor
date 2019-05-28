@@ -6,13 +6,17 @@
         "activationKey":{
             "type": "securestring"
         },
-        "adminUsername": {
+		"adminUsername": {
             "type": "string",
             "defaultValue": "azureadmin"
         },
-        "sshPublicKey": {
-            "type": "string"
-        },
+		"adminPassword": {
+			"type": "securestring",
+			"defaultValue": "[concat('Subscription#',substring(resourcegroup().id,15,36))]",
+			"metadata": {
+				"description": "Password for the Virtual Machine.Default value is 'Subscription#<subscription id>'"
+			}
+		},
         "appId": {
             "type": "string"
         },
@@ -41,7 +45,7 @@
         }
     },
     "variables": {
-        "prefix": "azs",
+		"prefix": "azsgreen",
         "vmSize": "Standard_F2s_v2",
         "names": {
             "pubIp": "[concat(variables('prefix'),'pubIp')]",
@@ -151,7 +155,7 @@
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers',variables('names').lb),'/frontendIPConfigurations/',variables('names').lb,'-fe')]"
                             },
-                            "frontendPort": 3000,
+                            "frontendPort": 443,
                             "backendPort": 3000,
                             "enableFloatingIP": false,
                             "idleTimeoutInMinutes": 4,
@@ -269,17 +273,7 @@
                 "osProfile": {
                     "computerName": "[variables('names').vm]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "linuxConfiguration": {
-                        "disablePasswordAuthentication": true,
-                        "ssh": {
-                            "publicKeys": [
-                                {
-                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-                                    "keyData": "[parameters('sshPublicKey')]"
-                                }
-                            ]
-                        }
-                    }
+					"adminPassword": "[parameters('adminPassword')]"
                 },
                 "hardwareProfile": {
                     "vmSize": "[variables('vmSize')]"
@@ -324,7 +318,7 @@
                 "protectedSettings": {
                     "commandToExecute": "[concat('/bin/bash connected.sh ', variables('singleQuote'), string(variables('scriptArguments')), variables('singleQuote'),' ',reference(variables('names').storage).primaryEndpoints.blob)]",
                     "fileUris": [
-                        "https://raw.githubusercontent.com/Azure/azurestack-uptime-monitor/master/scripts/deploy/connected.sh"
+                        "https://raw.githubusercontent.com/d0man33/azurestack-uptime-monitor/master/scripts/deploy/connected.sh"
                     ]
                 }
             }
