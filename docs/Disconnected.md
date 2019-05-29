@@ -24,7 +24,7 @@ The disconnected version has the following prerequisites.
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-You can either click the "deploy to Azure button" or sign in to the Azure Portal, select to create a new resource and search for **template deployment** in the marketplace. In the template deployment marketplace item, select to **build your own template** in the editor and copy the [initialize - deployment template](https://raw.githubusercontent.com/Azure/azurestack-uptime-monitor/master/deploy/initialize/mainTemplate.json) to template editor and hit save.
+You can either click the "deploy to Azure button" or sign in to the Azure Portal, select to create a new resource and search for **template deployment** in the marketplace. In the template deployment marketplace item, select to **build your own template** in the editor and copy the [initialize - deployment template](https://raw.githubusercontent.com/d0man33/azurestack-uptime-monitor/master/deploy/initialize/mainTemplate.json) to template editor and hit save.
 
 > You must use the same username and SSH public that you will use for the deployment of the solution on Azure Stack.
 
