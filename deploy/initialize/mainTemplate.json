@@ -178,7 +178,7 @@
                 "protectedSettings": {
                     "commandToExecute": "/bin/bash initialize.sh",
                     "fileUris": [
-                        "https://raw.githubusercontent.com/Azure/azurestack-uptime-monitor/master/scripts/deploy/initialize.sh"
+                        "https://raw.githubusercontent.com/d0man33/azurestack-uptime-monitor/master/scripts/deploy/initialize.sh"
                     ]
                 }
             }
