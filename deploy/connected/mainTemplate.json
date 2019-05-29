@@ -45,7 +45,7 @@
         }
     },
     "variables": {
-		"prefix": "azsgreen",
+		"prefix": "azsred",
         "vmSize": "Standard_F2s_v2",
         "names": {
             "pubIp": "[concat(variables('prefix'),'pubIp')]",
