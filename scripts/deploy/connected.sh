@@ -415,7 +415,7 @@ sudo docker service create \
      --mount type=bind,src=/azs/grafana/database,dst=/var/lib/grafana \
      --mount type=bind,src=/azs/grafana/datasources,dst=/etc/grafana/provisioning/datasources \
      --mount type=bind,src=/azs/grafana/dashboards,dst=/etc/grafana/provisioning/dashboards \
-     --publish published=443,target=443 \
+     --publish published=3000,target=3000 \
      --env GF_SECURITY_ADMIN_USER=$(echo $ARGUMENTS_JSON | jq -r ".adminUsername") \
      --env GF_SECURITY_ADMIN_PASSWORD=$(echo $ARGUMENTS_JSON | jq -r ".grafanaPassword") \
      grafana/grafana:$GRAFANA_VERSION \
