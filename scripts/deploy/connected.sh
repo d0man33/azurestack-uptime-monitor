@@ -52,7 +52,7 @@ sudo mkdir -p /azs/{influxdb,grafana/{database,datasources,dashboards},common,cl
   && echo "## Pass: created directory structure" \
   || { echo "## Fail: failed to create directory structure" ; exit 1 ; }
 
-BASE_URL=https://raw.githubusercontent.com/Azure/azurestack-uptime-monitor/master
+BASE_URL=https://raw.githubusercontent.com/d0man33/azurestack-uptime-monitor/master
 
 FILE=$(sudo curl -s "$BASE_URL"/scripts/common/config.json | jq -r ".files[] | .[]") \
   && echo "## Pass: retrieve file json" \
