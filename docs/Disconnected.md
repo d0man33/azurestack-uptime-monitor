@@ -113,7 +113,7 @@ $ManagedDisk.id
 ```
 
 ### Deploy the solution referencing the VHD
-Login to the Azure Stack tenant portal with a user that has access contributor access on the subscription that contains the newly created managed disk. Select to create a new resource and search for **template deployment** in the marketplace. Select **edit template** and copy the [disconnected - deployment template](https://raw.githubusercontent.com/Azure/azurestack-uptime-monitor/master/deploy/disconnected/mainTemplate.json) to template editor and hit save.
+Login to the Azure Stack tenant portal with a user that has access contributor access on the subscription that contains the newly created managed disk. Select to create a new resource and search for **template deployment** in the marketplace. Select **edit template** and copy the [disconnected - deployment template](https://raw.githubusercontent.com/d0man33/azurestack-uptime-monitor/master/deploy/disconnected/mainTemplate.json) to template editor and hit save.
 
 The deployment template requires the following inputs:
 
