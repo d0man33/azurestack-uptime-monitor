@@ -155,7 +155,7 @@
                             "frontendIPConfiguration": {
                                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers',variables('names').lb),'/frontendIPConfigurations/',variables('names').lb,'-fe')]"
                             },
-                            "frontendPort": 443,
+                            "frontendPort": 80,
                             "backendPort": 3000,
                             "enableFloatingIP": false,
                             "idleTimeoutInMinutes": 4,
