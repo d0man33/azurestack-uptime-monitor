@@ -197,7 +197,7 @@
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
-                            "destinationPortRange": "443"
+                            "destinationPortRange": "3000"
                         }
                     }
                 ]
